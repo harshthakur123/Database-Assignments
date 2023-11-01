@@ -1,0 +1,80 @@
+29. Display empid,name,sal,comm,remark Remark should base on following conditions
+
+comm >= 600 "excellent Keep it up"
+if it < 600 or not null "good"
+otherwise "Need improvement"
+
+Ans.
+select empno as EMPID,ename as ENAME,sal as SAL,comm as COMM,
+case
+when comm>=600 then "Encellent Keep it up"
+when comm<600 or comm is not null then "Good"
+else "Need Improvement"
+end as REMARK
+from emp;
+
+30. Display empid, name, deptno and department name by using following conditions.
+
+dept 10 then "Hr"
+if 20 then "Admin"
+if 30 then "accounts"
+otherwise purchase
+
+Ans.
+
+select empno,ename,deptno,
+case
+	when deptno=10 then "HR"
+	when deptno=20 then "Admin"
+	when deptno=30 then "Accounts"
+	else "Purchase"
+end as "department name"
+from emp;
+
+
+30. Practice creating following tables
+
+create table mydept_DBDA
+(
+deptid number primary key,
+dname varchar2(20) not null unique,
+dloc varchar2(20)
+)
+
+insert into mydept_DBDA values(30,'Purchase','Mumbai');
+
+create table myemployee
+(
+empno number(5) primary key,
+fname varchar2(15) not null,
+mname varchar2(15),
+lname varchar2(15) not null,
+sal number(9,2) check(sal >=1000),
+doj date default sysdate,
+passportnum varchar2(15) unique,
+deptno number constraint fk_deptno references mydept_DBDA(deptid) on delete
+cascade
+)
+
+Ans:
+
+create table mydept_DBDA(
+deptid int primary key,
+dname varchar(30) not null unique,
+dloc varchar(30)
+);
+
+
+
+create table myemployee(
+empno int primary key,
+fname varchar(30) not null,
+mname varchar(30),
+lname varchar(30) not null,
+sal double(9,2) check(sal>=1000),
+doj date default null,
+passportno int unique,
+deptno int,
+constraint fk_deptno foreign key(deptno) references mydept_DBDA(deptid) on delete
+cascade
+);
